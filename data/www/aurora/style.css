@@ -435,6 +435,12 @@ body {
     color: var(--text-primary);
 }
 
+.status-location {
+    font-size: var(--font-size-sm);
+    margin-top: -5px;
+    color: var(--text-secondary);
+}
+
 /* 指南卡片 */
 .guide-card {
     padding: 2rem;

@@ -1,43 +1,66 @@
-// Aurora主题的JavaScript功能
+/**
+ * Aurora主题的JavaScript功能
+ * 提供GitHub链接转换、UI交互和API数据获取功能
+ */
 
-const githubForm = document.getElementById('github-form');
-const githubLinkInput = document.getElementById('githubLinkInput');
-const formattedLinkOutput = document.getElementById('formattedLinkOutput');
-const output = document.getElementById('output');
-const copyButton = document.getElementById('copyButton');
-const openButton = document.getElementById('openButton');
-const toast = document.getElementById('toast');
+// DOM元素缓存
+const elements = {
+    form: document.getElementById('github-form'),
+    input: document.getElementById('githubLinkInput'),
+    output: {
+        container: document.getElementById('output'),
+        content: document.getElementById('formattedLinkOutput')
+    },
+    buttons: {
+        copy: document.getElementById('copyButton'),
+        open: document.getElementById('openButton')
+    },
+    toast: document.getElementById('toast')
+};
 
-
-// 显示提示信息
+/**
+ * 显示提示信息
+ * @param {string} message - 要显示的消息
+ */
 function showToast(message) {
     const toastMessage = document.querySelector('.toast-message');
+    if (!toastMessage) {
+        console.error('找不到toast-message元素');
+        return;
+    }
+    
     toastMessage.textContent = message;
-    toast.classList.add('show');
+    elements.toast.classList.add('show');
     
     // 3秒后自动隐藏
     setTimeout(() => {
-        toast.classList.remove('show');
+        elements.toast.classList.remove('show');
     }, 3000);
 }
 
-// 格式化GitHub链接
+/**
+ * 格式化GitHub链接
+ * @param {string} githubLink - 原始GitHub链接
+ * @returns {string|null} - 格式化后的链接或null（如果链接无效）
+ */
 function formatGithubLink(githubLink) {
     const currentHost = window.location.host;
+    const protocol = window.location.protocol;
     let formattedLink = "";
 
+    // 链接类型匹配
     if (githubLink.startsWith("https://github.com/") || githubLink.startsWith("http://github.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + "/github.com" + githubLink.substring(githubLink.indexOf("/", 8));
+        formattedLink = `${protocol}//${currentHost}/github.com${githubLink.substring(githubLink.indexOf("/", 8))}`;
     } else if (githubLink.startsWith("github.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + "/" + githubLink;
+        formattedLink = `${protocol}//${currentHost}/${githubLink}`;
     } else if (githubLink.startsWith("https://raw.githubusercontent.com/") || githubLink.startsWith("http://raw.githubusercontent.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + githubLink.substring(githubLink.indexOf("/", 7));
+        formattedLink = `${protocol}//${currentHost}${githubLink.substring(githubLink.indexOf("/", 7))}`;
     } else if (githubLink.startsWith("raw.githubusercontent.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + "/" + githubLink;
+        formattedLink = `${protocol}//${currentHost}/${githubLink}`;
     } else if (githubLink.startsWith("https://gist.githubusercontent.com/") || githubLink.startsWith("http://gist.githubusercontent.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + "/gist.github.com" + githubLink.substring(githubLink.indexOf("/", 18));
+        formattedLink = `${protocol}//${currentHost}/gist.github.com${githubLink.substring(githubLink.indexOf("/", 18))}`;
     } else if (githubLink.startsWith("gist.githubusercontent.com/")) {
-        formattedLink = window.location.protocol + "//" + currentHost + "/" + githubLink;
+        formattedLink = `${protocol}//${currentHost}/${githubLink}`;
     } else {
         showToast('请输入有效的GitHub链接');
         return null;
@@ -46,98 +69,91 @@ function formatGithubLink(githubLink) {
     return formattedLink;
 }
 
-// 表单提交事件
-githubForm.addEventListener('submit', function (e) {
+/**
+ * 处理表单提交
+ * @param {Event} e - 提交事件
+ */
+function handleFormSubmit(e) {
     e.preventDefault();
     
     // 添加加载动画
-    const submitButton = this.querySelector('button[type="submit"]');
+    const submitButton = e.target.querySelector('button[type="submit"]');
     const originalText = submitButton.innerHTML;
     submitButton.innerHTML = '<span class="btn-text">处理中...</span><span class="btn-icon material-symbols-rounded">sync</span>';
     submitButton.classList.add('loading');
     
     // 格式化链接
-    const formattedLink = formatGithubLink(githubLinkInput.value);
+    const formattedLink = formatGithubLink(elements.input.value.trim());
     
-    // 恢复按钮状态
+    // 恢复按钮状态并显示结果
     setTimeout(() => {
         submitButton.innerHTML = originalText;
         submitButton.classList.remove('loading');
         
         if (formattedLink) {
-            formattedLinkOutput.textContent = formattedLink;
-            output.style.display = 'block';
+            elements.output.content.textContent = formattedLink;
+            elements.output.container.style.display = 'block';
             
             // 平滑滚动到结果区域
-            output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            elements.output.container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }, 500);
-});
+}
 
-// 复制按钮点击事件
-copyButton.addEventListener('click', function () {
-    navigator.clipboard.writeText(formattedLinkOutput.textContent).then(() => {
-        showToast('链接已复制到剪贴板');
-    });
-});
-
-// 打开按钮点击事件
-openButton.addEventListener('click', function () {
-    window.open(formattedLinkOutput.textContent, '_blank');
-});
-
-// 移除主题切换按钮点击事件
-
-// 获取API数据
-function fetchAPI() {
-    // 获取文件大小限制
-    fetch('/api/size_limit')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('sizeLimitDisplay').textContent = `${data.MaxResponseBodySize} MB`;
-        })
-        .catch(() => {
-            document.getElementById('sizeLimitDisplay').textContent = '获取失败';
-        });
-
-    // 获取白名单状态
-    fetch('/api/whitelist/status')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('whiteListStatus').textContent = data.Whitelist ? '已开启' : '已关闭';
-        })
-        .catch(() => {
-            document.getElementById('whiteListStatus').textContent = '获取失败';
-        });
-
-    // 获取黑名单状态
-    fetch('/api/blacklist/status')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('blackListStatus').textContent = data.Blacklist ? '已开启' : '已关闭';
-        })
-        .catch(() => {
-            document.getElementById('blackListStatus').textContent = '获取失败';
-        });
-
-    // 获取版本信息
-    fetch('/api/version')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('versionBadge').textContent = data.Version;
-        })
-        .catch(() => {
-            document.getElementById('versionBadge').textContent = 'Unknown';
+/**
+ * 复制链接到剪贴板
+ */
+function copyLink() {
+    const linkText = elements.output.content.textContent;
+    navigator.clipboard.writeText(linkText)
+        .then(() => showToast('链接已复制到剪贴板'))
+        .catch(err => {
+            console.error('复制失败:', err);
+            showToast('复制失败，请手动复制');
         });
 }
 
-// 页面加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取API数据
-    fetchAPI();
+/**
+ * 在新标签页中打开链接
+ */
+function openLink() {
+    window.open(elements.output.content.textContent, '_blank');
+}
+
+/**
+ * 获取API数据
+ */
+function fetchAPI() {
+    // API端点和对应的DOM元素ID映射
+    const apiEndpoints = [
+        { url: '/api/size_limit', elementId: 'sizeLimitDisplay', formatter: data => `${data.MaxResponseBodySize} MB`, fallback: '获取失败' },
+        { url: '/api/whitelist/status', elementId: 'whiteListStatus', formatter: data => data.Whitelist ? '已开启' : '已关闭', fallback: '获取失败' },
+        { url: '/api/blacklist/status', elementId: 'blackListStatus', formatter: data => data.Blacklist ? '已开启' : '已关闭', fallback: '获取失败' },
+        { url: '/api/version', elementId: 'versionBadge', formatter: data => data.Version, fallback: 'Unknown' }
+    ];
+
+    // 统一处理API请求
+    apiEndpoints.forEach(endpoint => {
+        fetch(endpoint.url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(endpoint.elementId).textContent = endpoint.formatter(data);
+            })
+            .catch(() => {
+                document.getElementById(endpoint.elementId).textContent = endpoint.fallback;
+            }); 
+    });
     
-    // 添加输入框焦点效果
-    const inputField = document.getElementById('githubLinkInput');
+    // 获取客户端IP信息
+    fetchClientIPInfo();
+}
+
+/**
+ * 添加UI交互效果
+ */
+function setupUIInteractions() {
+    // 输入框焦点效果
+    const inputField = elements.input;
     inputField.addEventListener('focus', function() {
         this.parentElement.classList.add('focused');
     });
@@ -146,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         this.parentElement.classList.remove('focused');
     });
     
-    // 添加卡片悬停效果
+    // 卡片悬停效果
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -159,4 +175,49 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.boxShadow = '';
         });
     });
-});
+}
+
+/**
+ * 获取客户端IP和地区信息
+ */
+function fetchClientIPInfo() {
+    // 直接使用ipapi.co获取IP和地区信息
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.ip && !data.error) {
+                // 显示IP地址
+                document.getElementById('clientIPDisplay').textContent = data.ip;
+                
+                // 显示地区信息
+                const location = `${data.country_name || ''}${data.region ? ', ' + data.region : ''}${data.city ? ', ' + data.city : ''}`;
+                document.getElementById('clientIPLocation').textContent = location;
+            } else {
+                document.getElementById('clientIPDisplay').textContent = '无法获取IP';
+                document.getElementById('clientIPLocation').textContent = '无法获取地区信息';
+            }
+        })
+        .catch(() => {
+            document.getElementById('clientIPDisplay').textContent = '无法获取IP';
+            document.getElementById('clientIPLocation').textContent = '无法获取地区信息';
+        });
+}
+
+/**
+ * 初始化应用
+ */
+function initApp() {
+    // 绑定事件监听器
+    elements.form.addEventListener('submit', handleFormSubmit);
+    elements.buttons.copy.addEventListener('click', copyLink);
+    elements.buttons.open.addEventListener('click', openLink);
+    
+    // 获取API数据
+    fetchAPI();
+    
+    // 设置UI交互
+    setupUIInteractions();
+}
+
+// 页面加载完成后初始化应用
+document.addEventListener('DOMContentLoaded', initApp);
