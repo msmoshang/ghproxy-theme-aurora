@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub文件加速 - Aurora</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div class="aurora-bg">
+        <div class="aurora-light aurora-light-1"></div>
+        <div class="aurora-light aurora-light-2"></div>
+        <div class="aurora-light aurora-light-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">GitHub文件加速</h1>
+            <!-- <p class="subtitle">高速稳定的GitHub资源访问解决方案</p> -->
+        </header>
+
+        <main class="main-content">
+            <div class="card primary-card">
+                <form id="github-form" class="form">
+                    <div class="input-group">
+                        <span class="input-icon material-symbols-rounded">link</span>
+                        <input type="text" class="form-control" id="githubLinkInput" placeholder="请输入GitHub链接" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">获取加速链接</span>
+                        <span class="btn-icon material-symbols-rounded">bolt</span>
+                    </button>
+                </form>
+
+                <div id="output" class="output-container" style="display: none;">
+                    <div class="output-header">
+                        <span class="output-title">加速链接</span>
+                        <div class="output-actions">
+                            <button id="copyButton" class="btn btn-icon" title="复制链接">
+                                <span class="material-symbols-rounded">content_copy</span>
+                            </button>
+                            <button id="openButton" class="btn btn-icon" title="在新标签页中打开">
+                                <span class="material-symbols-rounded">open_in_new</span>
+                            </button>
+                        </div>
+                    </div>
+                    <pre id="formattedLinkOutput" class="output-content"></pre>
+                </div>
+
+                <p class="helper-text">支持GitHub链接、raw.githubusercontent.com和gist链接，自动转换为加速链接</p>
+            </div>
+
+            <div class="status-cards">
+                <div class="card status-card">
+                    <div class="status-icon">
+                        <span class="material-symbols-rounded">cloud_download</span>
+                    </div>
+                    <div class="status-content">
+                        <h3 class="status-title">文件大小限制</h3>
+                        <p class="status-value" id="sizeLimitDisplay">加载中...</p>
+                    </div>
+                </div>
+
+                <div class="card status-card">
+                    <div class="status-icon">
+                        <span class="material-symbols-rounded">verified_user</span>
+                    </div>
+                    <div class="status-content">
+                        <h3 class="status-title">白名单状态</h3>
+                        <p class="status-value" id="whiteListStatus">加载中...</p>
+                    </div>
+                </div>
+
+                <div class="card status-card">
+                    <div class="status-icon">
+                        <span class="material-symbols-rounded">gpp_bad</span>
+                    </div>
+                    <div class="status-content">
+                        <h3 class="status-title">黑名单状态</h3>
+                        <p class="status-value" id="blackListStatus">加载中...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card guide-card">
+                <h2 class="guide-title">使用指南</h2>
+                
+                <div class="guide-section">
+                    <h3 class="guide-section-title">支持的链接类型</h3>
+                    <ul class="guide-list">
+                        <li class="guide-item">GitHub 仓库文件</li>
+                        <li class="guide-item">Raw 文件链接</li>
+                        <li class="guide-item">Release 发布文件</li>
+                        <li class="guide-item">Gist 代码片段</li>
+                        <li class="guide-item">Git Clone (HTTPS)</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="guide-section-title">使用示例</h3>
+                    <div class="code-block">
+                        <div class="code-title">Git Clone 示例</div>
+                        <code class="code-content">git clone https://example.com/https://github.com/user/repo.git</code>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-title">文件下载示例</div>
+                        <code class="code-content">wget https://example.com/https://raw.githubusercontent.com/user/repo/main/file.txt</code>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="version-badge" id="versionBadge">加载中...</div>
+            <p class="copyright">
+                Copyright © 2024-<script>document.write(new Date().getFullYear());</script><br>
+                <a href="https://github.com/WJQSERVER-STUDIO/ghproxy" class="footer-link">后端采用 WJQSERVER-STUDIO</a> |
+                <a href="https://github.com/msmoshang" class="footer-link">前端采用 Aurora</a>
+            </p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span class="toast-icon material-symbols-rounded">info</span>
+            <div class="toast-message"></div>
+        </div>
+    </div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
