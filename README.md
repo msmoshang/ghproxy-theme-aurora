@@ -1,7 +1,7 @@
 # ghproxy-theme-aurora
 ghproxy极光主题，后端使用[WJQSERVER-STUDIO](https://github.com/WJQSERVER-STUDIO/ghproxy/)
 
-前置需求，需要安装好Docker ， Docker compose
+前置需求，需要安装好Docker ， Docker compose，Git
 
 运行项目
 
