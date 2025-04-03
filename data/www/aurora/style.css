@@ -81,7 +81,6 @@ body {
     height: 100%;
     z-index: -1;
     overflow: hidden;
-    background: radial-gradient(ellipse at bottom, rgba(240, 244, 253, 0.8) 0%, rgba(240, 244, 253, 1) 100%);
 }
 
 .aurora-light {
