@@ -1,5 +1,6 @@
 /**
  * Aurora主题的JavaScript功能
+ * 提供GitHub链接转换、UI交互和API数据获取功能
  */
 
 // DOM元素缓存
@@ -19,7 +20,7 @@ const elements = {
 
 /**
  * 显示提示信息
- * @param {string} message 
+ * @param {string} message - 要显示的消息
  */
 function showToast(message) {
     const toastMessage = document.querySelector('.toast-message');
@@ -40,7 +41,7 @@ function showToast(message) {
 /**
  * 格式化GitHub链接
  * @param {string} githubLink - 原始GitHub链接
- * @returns {string|null}
+ * @returns {string|null} - 格式化后的链接或null（如果链接无效）
  */
 function formatGithubLink(githubLink) {
     // 安全检查：确保输入是字符串类型
@@ -216,6 +217,9 @@ function fetchAPI() {
     fetchClientIPInfo();
 }
 
+/**
+ * 添加UI交互效果
+ */
 function setupUIInteractions() {
     // 输入框焦点效果
     const inputField = elements.input;
@@ -244,6 +248,7 @@ function setupUIInteractions() {
 
 /**
  * 获取客户端IP和地区信息
+ * 增强版本：添加隐私保护和安全措施
  */
 function fetchClientIPInfo() {
     // 显示加载状态

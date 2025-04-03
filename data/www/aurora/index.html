@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub文件加速 - Aurora</title>
+    <title>GitHub文件加速</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -21,9 +22,21 @@
     </div>
 
     <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <span class="material-symbols-rounded brand-icon">bolt</span>
+                <span class="brand-text">Aurora</span>
+            </div>
+            <div class="navbar-links">
+                <a href="https://github.com/msmoshang/ghproxy-theme-aurora" class="navbar-link" target="_blank">
+                    <span class="material-symbols-rounded">code</span>
+                    <span>源码</span>
+                </a>
+            </div>
+        </nav>
+        
         <header class="header">
             <h1 class="title">GitHub文件加速</h1>
-            <!-- <p class="subtitle">高速稳定的GitHub资源访问解决方案</p> -->
         </header>
 
         <main class="main-content">
@@ -41,7 +54,7 @@
 
                 <div id="output" class="output-container" style="display: none;">
                     <div class="output-header">
-                        <span class="output-title">加速链接</span>
+                        <span class="output-title"><span class="material-symbols-rounded">bolt</span>加速链接</span>
                         <div class="output-actions">
                             <button id="copyButton" class="btn btn-icon" title="复制链接">
                                 <span class="material-symbols-rounded">content_copy</span>
@@ -52,6 +65,9 @@
                         </div>
                     </div>
                     <pre id="formattedLinkOutput" class="output-content"></pre>
+                    <div class="output-footer">
+                        <span class="output-info"><span class="material-symbols-rounded">info</span>链接已生成，可直接使用</span>
+                    </div>
                 </div>
 
                 <p class="helper-text">支持GitHub api、raw、Release和gist链接，自动转换为加速链接</p>
@@ -61,6 +77,7 @@
                 <div class="card status-card">
                     <div class="status-icon">
                         <span class="material-symbols-rounded">cloud_download</span>
+                        <div class="status-icon-pulse"></div>
                     </div>
                     <div class="status-content">
                         <h3 class="status-title">文件大小限制</h3>
@@ -71,6 +88,7 @@
                 <div class="card status-card">
                     <div class="status-icon">
                         <span class="material-symbols-rounded">verified_user</span>
+                        <div class="status-icon-pulse"></div>
                     </div>
                     <div class="status-content">
                         <h3 class="status-title">白名单状态</h3>
@@ -81,6 +99,7 @@
                 <div class="card status-card">
                     <div class="status-icon">
                         <span class="material-symbols-rounded">gpp_bad</span>
+                        <div class="status-icon-pulse"></div>
                     </div>
                     <div class="status-content">
                         <h3 class="status-title">黑名单状态</h3>
@@ -91,6 +110,7 @@
                 <div class="card status-card">
                     <div class="status-icon">
                         <span class="material-symbols-rounded">lan</span>
+                        <div class="status-icon-pulse"></div>
                     </div>
                     <div class="status-content">
                         <h3 class="status-title">客户端IP</h3>
