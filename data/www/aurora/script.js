@@ -1,6 +1,5 @@
 /**
  * Aurora主题的JavaScript功能
- * 提供GitHub链接转换、UI交互和API数据获取功能
  */
 
 // DOM元素缓存
@@ -20,7 +19,7 @@ const elements = {
 
 /**
  * 显示提示信息
- * @param {string} message - 要显示的消息
+ * @param {string} message 
  */
 function showToast(message) {
     const toastMessage = document.querySelector('.toast-message');
@@ -41,7 +40,7 @@ function showToast(message) {
 /**
  * 格式化GitHub链接
  * @param {string} githubLink - 原始GitHub链接
- * @returns {string|null} - 格式化后的链接或null（如果链接无效）
+ * @returns {string|null}
  */
 function formatGithubLink(githubLink) {
     // 安全检查：确保输入是字符串类型
@@ -54,7 +53,7 @@ function formatGithubLink(githubLink) {
     githubLink = githubLink.trim();
     
     // 验证链接格式，只允许合法的GitHub链接格式
-    const validGithubUrlPattern = /^(https?:\/\/)?(github\.com|raw\.githubusercontent\.com|gist\.githubusercontent\.com)\/.+$/i;
+    const validGithubUrlPattern = /^(https?:\/\/)?(github\.com|raw\.githubusercontent\.com|gist\.githubusercontent\.com|api\.github\.com)\/.+$/i;
     if (!validGithubUrlPattern.test(githubLink)) {
         showToast('请输入有效的GitHub链接');
         return null;
@@ -85,6 +84,13 @@ function formatGithubLink(githubLink) {
             formattedLink = `${protocol}//${currentHost}/gist.github.com${githubLink.substring(pathIndex)}`;
         }
     } else if (githubLink.startsWith("gist.githubusercontent.com/")) {
+        formattedLink = `${protocol}//${currentHost}/${githubLink}`;
+    } else if (githubLink.startsWith("https://api.github.com/") || githubLink.startsWith("http://api.github.com/")) {
+        const pathIndex = githubLink.indexOf("/", 8);
+        if (pathIndex !== -1) {
+            formattedLink = `${protocol}//${currentHost}/api.github.com${githubLink.substring(pathIndex)}`;
+        }
+    } else if (githubLink.startsWith("api.github.com/")) {
         formattedLink = `${protocol}//${currentHost}/${githubLink}`;
     } else {
         showToast('请输入有效的GitHub链接');
@@ -210,9 +216,6 @@ function fetchAPI() {
     fetchClientIPInfo();
 }
 
-/**
- * 添加UI交互效果
- */
 function setupUIInteractions() {
     // 输入框焦点效果
     const inputField = elements.input;
@@ -241,7 +244,6 @@ function setupUIInteractions() {
 
 /**
  * 获取客户端IP和地区信息
- * 增强版本：添加隐私保护和安全措施
  */
 function fetchClientIPInfo() {
     // 显示加载状态
