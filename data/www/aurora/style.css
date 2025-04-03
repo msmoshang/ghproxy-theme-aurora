@@ -566,6 +566,19 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.uptime-badge {
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+}
+
 /* 提示框 */
 .toast {
     position: fixed;
@@ -644,6 +657,13 @@ body {
         position: static;
         display: inline-block;
         margin-bottom: 1rem;
+    }
+    
+    .uptime-badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 1rem;
+        margin-left: 0.5rem;
     }
     
     .footer {
