@@ -311,6 +311,14 @@ function fetchClientIPInfo() {
                 //     maskedIP = ip.split(':').slice(0, 4).join(':') + ':****';
                 // }
                 
+                // 处理IPv6地址显示问题
+                if (ip.includes(':')) {
+                    ipDisplay.style.fontSize = 'var(--font-size-sm)';
+                    ipDisplay.style.wordBreak = 'break-all';
+                    ipDisplay.style.overflowWrap = 'break-word';
+                    ipDisplay.style.maxWidth = '100%';
+                }
+                
                 ipDisplay.textContent = maskedIP;
                 
                 // 格式化地理位置信息显示
