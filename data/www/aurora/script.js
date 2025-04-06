@@ -1,6 +1,6 @@
 /**
  * Aurora主题的JavaScript功能
- * 提供GitHub链接转换、UI交互和API数据获取功能
+ * 提供GitHub链接转换、UI交互、API数据获取功能和深色模式切换
  */
 
 // DOM元素缓存
@@ -13,10 +13,67 @@ const elements = {
     },
     buttons: {
         copy: document.getElementById('copyButton'),
-        open: document.getElementById('openButton')
+        open: document.getElementById('openButton'),
+        themeToggle: document.getElementById('themeToggle')
     },
     toast: document.getElementById('toast')
 };
+
+/**
+ * 主题切换功能
+ */
+const themeManager = {
+    // 主题类型
+    themes: {
+        light: 'light',
+        dark: 'dark'
+    },
+    
+    // 存储键名
+    storageKey: 'aurora-theme-preference',
+    
+    // 获取当前主题
+    getCurrentTheme() {
+        return document.documentElement.getAttribute('data-theme') || this.themes.light;
+    },
+    
+    // 设置主题
+    setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // 更新主题图标
+        const themeIcon = elements.buttons.themeToggle.querySelector('.theme-icon');
+        if (themeIcon) {
+            themeIcon.textContent = theme === this.themes.dark ? 'dark_mode' : 'light_mode';
+        }
+        
+        // 保存到本地存储
+        localStorage.setItem(this.storageKey, theme);
+    },
+    
+    // 切换主题
+    toggleTheme() {
+        const currentTheme = this.getCurrentTheme();
+        const newTheme = currentTheme === this.themes.light ? this.themes.dark : this.themes.light;
+        this.setTheme(newTheme);
+    },
+    
+    // 初始化主题
+    initTheme() {
+        // 检查本地存储中的主题偏好
+        const savedTheme = localStorage.getItem(this.storageKey);
+        
+        if (savedTheme) {
+            // 应用保存的主题
+            this.setTheme(savedTheme);
+        } else {
+            // 检查系统偏好
+            const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            this.setTheme(prefersDarkMode ? this.themes.dark : this.themes.light);
+        }
+    }
+};
+
 
 /**
  * 显示提示信息
@@ -463,6 +520,13 @@ function initApp() {
     elements.form.addEventListener('submit', handleFormSubmit);
     elements.buttons.copy.addEventListener('click', copyLink);
     elements.buttons.open.addEventListener('click', openLink);
+    elements.buttons.themeToggle.addEventListener('click', function() {
+        themeManager.toggleTheme();
+        showToast('主题已切换');
+    });
+    
+    // 初始化主题
+    themeManager.initTheme();
     
     // 获取API数据
     fetchAPI();
