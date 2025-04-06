@@ -124,7 +124,7 @@ body {
 .aurora-light-1 {
     width: 350px;
     height: 350px;
-    background: rgba(91, 124, 250, 0.45); /* 蓝色 - 更鲜艳 */
+    background: rgba(91, 124, 250, 0.45); /* 蓝色 */
     top: 10%;
     left: 15%;
     animation-delay: 0s;
@@ -134,7 +134,7 @@ body {
 .aurora-light-2 {
     width: 450px;
     height: 450px;
-    background: rgba(157, 111, 224, 0.45); /* 紫色 - 更鲜艳 */
+    background: rgba(157, 111, 224, 0.45); /* 紫色 */
     bottom: 10%;
     right: 15%;
     animation-delay: -5s;
@@ -144,7 +144,7 @@ body {
 .aurora-light-3 {
     width: 300px;
     height: 300px;
-    background: rgba(56, 178, 172, 0.35); /* 青色 - 更鲜艳 */
+    background: rgba(56, 178, 172, 0.35); /* 青色 */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
