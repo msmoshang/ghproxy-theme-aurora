@@ -24,9 +24,9 @@ PC端
 
 PC端
 
-![image](https://github.com/user-attachments/assets/5f50e028-1160-4253-9e67-d93ada1f6f37)
+<img src="https://github.com/user-attachments/assets/5f50e028-1160-4253-9e67-d93ada1f6f37" alt="image" style="zoom: 50%;" />
 
 
 移动端
 
-![image](https://github.com/user-attachments/assets/9a177e00-524e-403c-bdda-e70c9c01fd9b)
+<img src="https://github.com/user-attachments/assets/9a177e00-524e-403c-bdda-e70c9c01fd9b" alt="image" style="zoom: 50%;" />
