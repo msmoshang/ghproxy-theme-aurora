@@ -42,4 +42,4 @@
 
 作者为 [@msmoshang](https://github.com/msmoshang)
 
-许可证: MIT License Copyright (c) msmoshang
+许可证: MIT License Copyright (c) 2025 msmoshang
