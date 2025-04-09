@@ -263,6 +263,17 @@ function fetchAPI() {
             ],
             fallback: '获取失败' 
         },
+        //版本
+        { 
+            url: '/api/version', 
+            mappings: [
+                { 
+                    elementId: 'versionBadge',
+                    formatter: data => data.Version
+                }
+            ],
+            fallback: '获取失败' 
+        },        
         //白名单 
         { 
             url: '/api/whitelist/status',
