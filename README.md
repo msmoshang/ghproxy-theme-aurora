@@ -1,41 +1,45 @@
-# ghproxy-theme-aurora
+# GHPrxoy-Frontend
 
-ghproxy极光主题，后端使用[WJQSERVER-STUDIO](https://github.com/WJQSERVER-STUDIO/ghproxy/)
+[GHProxy](https://github.com/WJQSERVER/ghproxy)项目前端存储库
 
-前置需求，需要安装好Docker ， Docker compose，Git
+## Bootstrap
 
-运行项目
+使用Bootstrap框架制作的前端页面, v2默认主题
 
-```
-git clone https://github.com/msmoshang/ghproxy-theme-aurora.git
-cd ghproxy-theme-aurora
-docker compose up -d
-```
+许可证: WJQserver Studio License v2.0
 
-**浅色**
+## Nebula
 
-**PC端**
-<img src="https://github.com/user-attachments/assets/b7fa6537-e0b1-4bdf-b620-176010dee1db" alt="image" style="zoom: 50%;" />
+在 https://github.com/WJQSERVER-STUDIO/ghproxy/pull/49 加入的主题, 作者为 [@liangshengmoran](https://github.com/liangshengmoran)
 
+许可证: MIT License
 
+## mino
 
-**移动端**
+作者为 [@admin8800](https://github.com/admin8800)
 
-<img src="https://github.com/user-attachments/assets/67b3e843-252f-45f5-9eb1-ec71cd6ed867" alt="image" style="zoom: 50%;" />
+许可证: MIT License Copyright (c) admin8800
 
+## Design
 
+在v3加入的新主题
 
-**深色**
+许可证: WJQserver Studio License v2.0
 
-**PC端**
+## Classic
 
+来自GHProxy v1阶段的前端页面, 回味项目起点
 
+许可证: WJQserver Studio License v2.0
 
-<img src="https://github.com/user-attachments/assets/5f50e028-1160-4253-9e67-d93ada1f6f37" alt="image" style="zoom: 50%;" />
+## Metro
 
+磁贴风格
 
+许可证: WJQserver Studio License v2.0
 
-**移动端**
+## Aurora
 
-<img src="https://github.com/user-attachments/assets/9a177e00-524e-403c-bdda-e70c9c01fd9b" alt="image" style="zoom: 50%;" />
+作者为 [@msmoshang](https://github.com/msmoshang)
 
+许可证: MIT License Copyright (c) msmoshang
