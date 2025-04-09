@@ -1,0 +1,339 @@
+:root {
+    /* 调色板 (Windows 8.1 风格) */
+    --primary-color: #0078d4; /* Windows 蓝 */
+    --primary-color-dark: #005fa3;
+    --accent-color: #00bcf2; /* 强调色 */
+    --gray: #605e5c;
+    --light-gray: #f4f4f4;
+    --dark-gray: #333;
+    --background: #fff;
+    --background-dark: #000;
+    --text-primary: #000;
+    --text-primary-dark: #fff;
+    --text-secondary: #666;
+    --text-secondary-dark: #aaa;
+    --tile-background: #eee;
+    --tile-background-dark: #222;
+    --tile-border: #ddd;
+    --tile-border-dark: #444;
+
+    /* 字体 */
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-size-base: 15px;
+    --line-height-base: 1.4;
+}
+
+/* 暗色模式 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: var(--primary-color-dark);
+        --background: var(--background-dark);
+        --text-primary: var(--text-primary-dark);
+        --text-secondary: var(--text-secondary-dark);
+        --tile-background: var(--tile-background-dark);
+        --tile-border: var(--tile-border-dark);
+    }
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+}
+
+.container {
+    width: 100%;
+    max-width: 1024px; /* 调整最大宽度以适应磁贴布局 */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.app-bar {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.app-bar__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center; /* 标题居中 */
+}
+/* 磁贴 */
+.tile {
+    background-color: var(--tile-background);
+    border: 1px solid var(--tile-border);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.input-tile {
+    /* 可以为输入框磁贴添加特定样式 */
+}
+
+.input-tile__description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.input-tile__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.text-field {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.text-field__input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid var(--tile-border);
+    background-color: var(--background);
+    color: var(--text-primary);
+    outline: none;
+    box-sizing: border-box;
+      transition: border-color 0.3s;
+}
+
+.text-field__input:focus {
+    border-color: var(--primary-color);
+}
+
+.text-field__input::placeholder {
+    color: var(--text-secondary);
+}
+.text-field__error {
+    color: #e74c3c; /* Windows 红色 */
+    font-size: 0.875rem;
+    margin-top: 4px;
+    margin-left: 12px;
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+}
+
+.text-field__error--visible {
+    display: block;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600; /* 加粗 */
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    gap: 8px;
+    text-transform: none;
+    transition: background-color 0.2s;
+}
+
+.button--filled {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.button--filled:hover {
+    background-color: var(--primary-color-dark);
+}
+.button--filled:disabled{
+    background-color: var(--gray);
+    color: var(--light-gray);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.button--flat {
+    background-color: transparent;
+    color: var(--primary-color);
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+     min-width: 0;
+}
+
+.button--flat:hover {
+    background-color: rgba(0, 120, 212, 0.1); /* 浅蓝色背景 */
+}
+
+.button--flat:active {
+    background-color: rgba(0, 120, 212, 0.2);
+}
+/* 输出区域 */
+.output-area {
+    position: relative;
+    background-color: var(--background);
+    border: 1px solid var(--tile-border);
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.output-area__pre {
+    font-family: "Consolas", "Courier New", monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.output-area__actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+/* 状态磁贴组 */
+.tile-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 调整列宽 */
+    gap: 20px;
+}
+
+.status-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: var(--tile-background);
+    border: 1px solid var(--tile-border);
+    padding: 16px;
+
+}
+
+.status-tile__icon {
+    font-size: 48px; /* 大图标 */
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.status-tile__title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--text-primary);
+}
+
+.status-tile__text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+.helper-text{
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    margin-bottom: 1rem;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: auto;
+    border-top: 1px solid var(--tile-border);
+}
+
+.footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark-gray);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+    font-size: 0.9rem;
+}
+
+.toast--visible {
+    display: block;
+    animation: slideInUp 0.5s, fadeOut 0.5s 2s;
+}
+
+.version-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+     z-index: 3;
+}
+/* 动画 */
+@keyframes slideInUp {
+    from {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
