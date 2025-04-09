@@ -252,10 +252,76 @@ function openLink() {
 function fetchAPI() {
     // API端点和对应的DOM元素ID映射
     const apiEndpoints = [
-        { url: '/api/size_limit', elementId: 'sizeLimitDisplay', formatter: data => `${data.MaxResponseBodySize} MB`, fallback: '获取失败' },
-        { url: '/api/whitelist/status', elementId: 'whiteListStatus', formatter: data => data.Whitelist ? '已开启' : '已关闭', fallback: '获取失败' },
-        { url: '/api/blacklist/status', elementId: 'blackListStatus', formatter: data => data.Blacklist ? '已开启' : '已关闭', fallback: '获取失败' },
-        { url: '/api/version', elementId: 'versionBadge', formatter: data => data.Version, fallback: 'Unknown' }
+        //限制大小
+        { 
+            url: '/api/size_limit', 
+            mappings: [
+                { 
+                    elementId: 'sizeLimitDisplay',
+                    formatter: data => `${data.MaxResponseBodySize} MB`
+                }
+            ],
+            fallback: '获取失败' 
+        },
+        //白名单 
+        { 
+            url: '/api/whitelist/status',
+            mappings: [
+                { 
+                    elementId: 'whiteListStatus',
+                    formatter: data => data.Whitelist ? '已开启' : '已关闭'
+                }
+            ],
+            fallback: '获取失败'
+        },
+        //黑名单
+        { 
+            url: '/api/blacklist/status',
+            mappings: [
+                { 
+                    elementId: 'blackListStatus',
+                    formatter: data => data.Blacklist ? '已开启' : '已关闭'
+                }
+            ],
+            fallback: '获取失败'
+        },
+        //限制器
+        { 
+            url: '/api/rate_limit/status',
+            mappings: [
+                { 
+                    elementId: 'ratelimitStatus',
+                    formatter: data => data.RateLimit ? '已开启' : '已关闭'
+                }
+            ],
+            fallback: '获取失败'
+        },
+        //Git Clone缓存
+        {
+            url: '/api/smartgit/status',
+            mappings: [
+                {
+                    elementId: 'smartgitStatus',
+                    formatter: data => data.enabled? '已开启' : '已关闭'
+                }
+            ],
+            fallback: '获取失败'
+        },
+        //脚本嵌套加速
+        { 
+            url: '/api/shell/status',
+            mappings: [
+                { 
+                    elementId: 'combinedShellStatus',
+                    formatter: data => {
+                        if (data.editor && data.rewriteAPI) return '双功能已启用';
+                        if (data.editor) return 'Shell嵌套加速启用';
+                        return '功能已禁用';
+                    }
+                }
+            ],
+            fallback: '状态获取失败'
+        }
     ];
 
     // 统一处理API请求
@@ -263,15 +329,27 @@ function fetchAPI() {
         fetch(endpoint.url)
             .then(response => response.json())
             .then(data => {
-                document.getElementById(endpoint.elementId).textContent = endpoint.formatter(data);
+                endpoint.mappings.forEach(mapping => {
+                    updateElement(mapping.elementId, mapping.formatter(data));
+                });
             })
             .catch(() => {
-                document.getElementById(endpoint.elementId).textContent = endpoint.fallback;
-            }); 
+                endpoint.mappings.forEach(mapping => {
+                    updateElement(mapping.elementId, endpoint.fallback);
+                });
+            });
     });
     
     // 获取客户端IP信息
     fetchClientIPInfo();
+}
+
+// 通用元素更新函数
+function updateElement(elementId, content) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = content;
+    }
 }
 
 /**

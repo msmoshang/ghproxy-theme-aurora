@@ -185,6 +185,18 @@ body {
 }
 
 /* 性能优化：减少重复的媒体查询 */
+/* 平板设备适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .status-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .status-card {
+        height: 110px;
+    }
+}
+
+/* 移动设备适配 */
 @media (max-width: 768px) {
     
     /* 优化移动端背景光效 - 统一定义一次 */
@@ -227,6 +239,19 @@ body {
         word-wrap: normal;
         direction: ltr;
         -webkit-font-smoothing: antialiased;
+    }
+    
+    /* 移动端状态卡片适配 */
+    .status-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-card-wide {
+        grid-column: 1;
+    }
+    
+    .status-card {
+        height: 100px;
     }
 }
 
@@ -673,12 +698,18 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* 宽卡片样式 - 占据两列 */
+.status-card-wide {
+    grid-column: span 2;
+}
+
 .status-card {
     display: flex;
     align-items: center;
     gap: 1.2rem;
     padding: 1.25rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 120px; /* 固定高度确保所有卡片大小一致 */
 }
 
 .status-card:hover {
