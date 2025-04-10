@@ -198,8 +198,60 @@ body {
 
 /* 移动设备适配 */
 @media (max-width: 768px) {
+    /* 优化容器边距和宽度 */
+    .container {
+        padding: 1rem 1rem;
+    }
     
-    /* 优化移动端背景光效 - 统一定义一次 */
+    /* 调整标题大小 */
+    .title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* 调整导航栏在小屏幕上的布局 */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+    }
+    
+    .navbar-links {
+        gap: 0.5rem;
+    }
+    
+    .navbar-link {
+        padding: 0.4rem 0.8rem;
+        font-size: var(--font-size-xs);
+    }
+    
+    .theme-text {
+        display: none;
+    }
+    
+    /* 调整表单和按钮 */
+    .form {
+        gap: 1rem;
+    }
+    
+    .form-control {
+        padding: 0.9rem 1rem 0.9rem 2.8rem;
+        font-size: var(--font-size-sm);
+    }
+    
+    .input-icon {
+        left: 0.8rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.2rem;
+    }
+    
+    /* 调整主卡片 */
+    .primary-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    /* 优化移动端背景光效 */
     .aurora-light {
         filter: blur(40px);
         opacity: 0.4;
@@ -224,7 +276,7 @@ body {
         height: 120px;
     }
     
-    /* 确保图标正确显示 - 只定义一次 */
+    /* 确保图标正确显示 */
     .material-symbols-rounded {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         font-family: 'Material Symbols Rounded', sans-serif;
@@ -244,6 +296,7 @@ body {
     /* 移动端状态卡片适配 */
     .status-cards {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .status-card-wide {
@@ -251,7 +304,42 @@ body {
     }
     
     .status-card {
-        height: 100px;
+        height: auto;
+        min-height: 90px;
+        padding: 1rem;
+    }
+    
+    .status-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .status-title {
+        font-size: var(--font-size-xs);
+    }
+    
+    .status-value {
+        font-size: var(--font-size-md);
+    }
+    
+    /* 调整指南卡片 */
+    .guide-card {
+        padding: 1.2rem;
+    }
+    
+    .guide-title {
+        font-size: var(--font-size-xl);
+    }
+    
+    .guide-section-title {
+        font-size: var(--font-size-md);
+    }
+    
+    .code-content {
+        font-size: var(--font-size-xs);
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 }
 
@@ -370,6 +458,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
 }
 
 /* 卡片 - 增强视觉效果 */
@@ -383,6 +472,7 @@ body {
     border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .card::before {
@@ -614,6 +704,7 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
+    width: 100%;
 }
 
 .output-container:hover {
@@ -658,7 +749,9 @@ body {
     background-color: transparent;
     max-height: 200px;
     overflow-y: auto;
+    overflow-x: hidden;
     border-bottom: 1px solid var(--border-color);
+    width: 100%;
 }
 
 .output-footer {
@@ -696,11 +789,69 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 /* 宽卡片样式 - 占据两列 */
 .status-card-wide {
     grid-column: span 2;
+}
+
+@media (max-width: 576px) {
+    .status-card-wide {
+        grid-column: 1;
+    }
+    
+    /* 调整卡片间距 */
+    .status-cards {
+        gap: 0.75rem;
+    }
+    
+    /* 调整主内容间距 */
+    .main-content {
+        gap: 1.5rem;
+    }
+}
+
+/* 超小屏幕设备适配 */
+@media (max-width: 400px) {
+    .container {
+        padding: 0.75rem 0.75rem;
+    }
+    
+    .navbar {
+        margin-bottom: 1rem;
+    }
+    
+    .header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .status-cards {
+        gap: 0.5rem;
+    }
+    
+    .status-card {
+        min-height: 80px;
+        padding: 0.75rem;
+    }
+    
+    .status-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-primary {
+        width: 100%;
+    }
+    
+    .guide-section {
+        padding: 0.75rem;
+    }
 }
 
 .status-card {
@@ -1046,6 +1197,8 @@ body {
 @media (max-width: 768px) {
     .container {
         padding: 1.5rem 1rem;
+        width: 100%;
+        max-width: 100%;
     }
     
     .title {
@@ -1070,6 +1223,48 @@ body {
     
     .guide-card {
         padding: 1.5rem;
+    }
+    
+    /* 调整输出容器 */
+    .output-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .output-content {
+        font-size: var(--font-size-xs);
+        padding: 0.75rem;
+    }
+    
+    .output-footer {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    /* 调整页脚 */
+    .footer {
+        padding-top: 1rem;
+        text-align: center;
+    }
+    
+    .copyright {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 优化代码块 */
+    .code-block {
+        margin-bottom: 1rem;
+    }
+    
+    .code-title {
+        padding: 0.5rem 0.75rem;
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 优化版本和运行时间徽章 */
+    .version-badge, .uptime-badge {
+        font-size: var(--font-size-xs);
+        padding: 0.3rem 0.6rem;
+        margin: 0.25rem;
     }
     
     .version-badge {
