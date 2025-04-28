@@ -252,6 +252,17 @@ function openLink() {
 function fetchAPI() {
     // API端点和对应的DOM元素ID映射
     const apiEndpoints = [
+        //获取版本
+        {
+            url: '/api/version',
+            mappings: [
+                {
+                    elementId: 'versionBadge',
+                    formatter: data => data.version
+                }
+            ],
+            fallback: '获取失败'
+        },
         //限制大小
         { 
             url: '/api/size_limit', 
