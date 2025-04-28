@@ -258,7 +258,7 @@ function fetchAPI() {
             mappings: [
                 {
                     elementId: 'versionBadge',
-                    formatter: data => data.version
+                    formatter: data => data.Version
                 }
             ],
             fallback: '获取失败'
