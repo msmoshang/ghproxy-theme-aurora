@@ -285,13 +285,21 @@ function fetchAPI() {
             ],
             fallback: '获取失败'
         },
-        //限制器
+        //Docker加速
         { 
-            url: '/api/rate_limit/status',
+            url: '/api/docker/status',
             mappings: [
                 { 
-                    elementId: 'ratelimitStatus',
-                    formatter: data => data.RateLimit ? '已开启' : '已关闭'
+                    elementId: 'dockerStatus',
+                    formatter: data => {
+                        const statusText = data.enabled ? '已开启' : '已关闭';
+                        if (data.enabled && data.target) {
+                            return `${statusText}，镜像源: ${data.target}`;
+                        } else {
+                            // 其他情况（未开启或未配置 target）只显示状态
+                            return statusText;
+                        }
+                    }
                 }
             ],
             fallback: '获取失败'
@@ -321,18 +329,7 @@ function fetchAPI() {
                 }
             ],
             fallback: '状态获取失败'
-        },
-        //版本
-        { 
-            url: '/api/version', 
-            mappings: [
-                { 
-                    elementId: 'versionBadge',
-                    formatter: data => data.Version
-                }
-            ],
-            fallback: '获取失败' 
-        },                
+        }
     ];
 
     // 统一处理API请求
