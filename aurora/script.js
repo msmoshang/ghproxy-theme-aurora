@@ -298,7 +298,7 @@ function fetchAPI() {
         },
         //Docker加速
         { 
-            url: '/api/docker/status',
+            url: '/api/oci_proxy/status',
             mappings: [
                 { 
                     elementId: 'dockerStatus',
@@ -328,15 +328,11 @@ function fetchAPI() {
         },
         //脚本嵌套加速
         { 
-            url: '/api/shell/status',
+            url: '/api/shell_nest/status',
             mappings: [
                 { 
                     elementId: 'combinedShellStatus',
-                    formatter: data => {
-                        if (data.editor && data.rewriteAPI) return '双功能已启用';
-                        if (data.editor) return 'Shell嵌套加速启用';
-                        return '功能已禁用';
-                    }
+                    formatter: data => data.enabled ? '已开启' : '已关闭'
                 }
             ],
             fallback: '状态获取失败'
